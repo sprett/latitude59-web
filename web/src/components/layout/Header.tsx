@@ -2,7 +2,17 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, X, Music, Instagram, Facebook, Youtube } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSpotify,
+  faInstagram,
+  faTiktok,
+  faYoutube,
+  faSoundcloud,
+} from "@fortawesome/free-brands-svg-icons";
+import AppleMusicIcon from "@/components/ui/AppleMusicIcon";
+import "@/lib/fontawesome";
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,13 +25,58 @@ export default function Header() {
   ];
 
   const socialIcons = [
-    { name: "Apple Music", href: "#", icon: Music },
-    { name: "Instagram", href: "#", icon: Instagram },
-    { name: "Spotify", href: "#", icon: Music },
-    { name: "SoundCloud", href: "#", icon: Music },
-    { name: "YouTube", href: "#", icon: Youtube },
-    { name: "TikTok", href: "#", icon: Music },
+    {
+      name: "Apple Music",
+      href: "https://music.apple.com/fr/artist/latitude-59/1817503477?l=en-GB",
+      icon: "applemusic",
+      color: "#FB3C56",
+    },
+    {
+      name: "Instagram",
+      href: "https://www.instagram.com/59latitude/",
+      icon: faInstagram,
+      color: "#E4405F",
+    },
+    {
+      name: "Spotify",
+      href: "https://open.spotify.com/artist/2rnFDslzyFxifdAWLXTdWF?si=MInkwkrZRnaLDlHfo1CBqg",
+      icon: faSpotify,
+      color: "#1DB954",
+    },
+    {
+      name: "SoundCloud",
+      href: "https://soundcloud.com/latitude59",
+      icon: faSoundcloud,
+      color: "#FF5733",
+    },
+    {
+      name: "YouTube",
+      href: "https://www.youtube.com/channel/UCwWJAUAzZLZ9c3wQ4j0MrJQ",
+      icon: faYoutube,
+      color: "#FF0000",
+    },
+    {
+      name: "TikTok",
+      href: "https://www.tiktok.com/@latitude59music",
+      icon: faTiktok,
+      color: "#FFFFFF",
+    },
   ];
+
+  const renderSocialIcon = (social: any) => {
+    if (social.icon === "applemusic") {
+      return (
+        <AppleMusicIcon className="h-5 w-5" style={{ color: social.color }} />
+      );
+    }
+    return (
+      <FontAwesomeIcon
+        icon={social.icon}
+        className="h-5 w-5"
+        style={{ color: social.color }}
+      />
+    );
+  };
 
   return (
     <header className="sticky top-0 z-50 bg-black/90 backdrop-blur-md  ">
@@ -60,8 +115,10 @@ export default function Header() {
                 href={social.href}
                 className="text-white hover:text-blue-400 transition-colors p-1"
                 aria-label={social.name}
+                target={social.href !== "#" ? "_blank" : undefined}
+                rel={social.href !== "#" ? "noopener noreferrer" : undefined}
               >
-                <social.icon className="h-5 w-5" />
+                {renderSocialIcon(social)}
               </Link>
             ))}
           </div>
@@ -101,8 +158,12 @@ export default function Header() {
                       href={social.href}
                       className="text-white hover:text-blue-400 transition-colors p-1"
                       aria-label={social.name}
+                      target={social.href !== "#" ? "_blank" : undefined}
+                      rel={
+                        social.href !== "#" ? "noopener noreferrer" : undefined
+                      }
                     >
-                      <social.icon className="h-5 w-5" />
+                      {renderSocialIcon(social)}
                     </Link>
                   ))}
                 </div>
